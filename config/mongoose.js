@@ -48,3 +48,5 @@ db.on('reconnected', function () {
 
 
 require('../app/models/product.model');
+
+require('../app/models/movieOrder.model');

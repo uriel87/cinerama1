@@ -12,7 +12,7 @@ var productSchema = require('mongoose').model('Product');
 
 exports.getAllProduct = function (req,res) {
 	console.log('in controller getAllProduct');
-	productSchema.find({},function (err, docProducts) {
+	productSchema.find({},function (err, productDoc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -22,8 +22,8 @@ exports.getAllProduct = function (req,res) {
 			});
 		}
 		else {
-			console.log("controller getAllProduct: " + docProducts);
-			res.status(200).json(docProducts);
+			console.log("controller getAllProduct: " + productDoc);
+			res.status(200).json(productDoc);
 		}
 	});
 };
@@ -45,7 +45,7 @@ exports.getProduct = function(req, res) {
 		name: productName
 	}
 
-	productSchema.find(query,function (err, docProduct) {
+	productSchema.find(query,function (err, productDoc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -55,8 +55,8 @@ exports.getProduct = function(req, res) {
 			});
 		}
 		else {
-			console.log("controller getProduct: " + docProduct);
-			res.status(200).json(docProduct);
+			console.log("controller getProduct: " + productDoc);
+			res.status(200).json(productDoc);
 		}
 	})
 

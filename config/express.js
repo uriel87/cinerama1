@@ -28,6 +28,7 @@ module.exports = function() {
 	// Load the routing files
 	require('../app/routes/foodPruduct.route.js')(app);
 
+	require('../app/routes/movieOrder.route.js')(app);
 
 	//Return the Express application instance
 	return app;
