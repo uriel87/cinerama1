@@ -22,11 +22,4 @@ var server = app.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + server.address().port + ' ..');
 
 
-
-// require('./app/models/movieOrder.model');
-// var movieOrderController = require('./app/controllers/movieOrder.controller');
-
-// movieOrderController.setSeat(1, false);
-
-
 });

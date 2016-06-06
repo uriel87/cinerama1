@@ -11,12 +11,16 @@ var mongoose = require("mongoose"),
 	schema = mongoose.Schema;
 
 
-
 var movieOrderSchema = new schema( {
 
-	name: { type:String,  unique:true},
+	name: String,
 
-	review: String,
+	review: {
+	    lame: { type: Number, default: 0 },
+	    wtf: { type: Number, default: 0 },
+	    wow: { type: Number, default: 0 },
+	    nice: { type: Number, default: 0 }
+    },
 
 	cinema: Number,
 
@@ -25,7 +29,7 @@ var movieOrderSchema = new schema( {
 	auditorium: Number,
 
 	seats: [{
-	    row: { type: Number, unique:true },
+	    row: Number,
 	    seat : [{
 	    	number: Number,
 	    	occupied: Boolean
@@ -39,6 +43,4 @@ var movieOrderSchema = new schema( {
 // // Define schema name
 mongoose.model('MovieOrder',movieOrderSchema);
 
-
-// review: enum: ['lame.', 'wtf.', 'wow.', 'nice'],
 
