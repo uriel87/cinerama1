@@ -6,10 +6,10 @@ var movieOrderController = require('../controllers/movieOrder.controller');
 // products routes
 module.exports = function(app) {
 
-	//app.get('/product/:productName', foodPruductController.getProduct)	// product by name page
+	app.post('/getAllMovies', movieOrderController.getAllMovies)	// all movies page
 
-	app.get('/getAllMovies', movieOrderController.getAllMovies)	// all products page
+	app.post('/getMovieOrder/', movieOrderController.getMovieOrder)	// one movie to show before order page 
 
-	//app.get('/getSeats', movieOrderController.getSeats)	// all products page  
+	app.post('/setSeats/', movieOrderController.setSeats)	// one movie to show before order page 
 
 };

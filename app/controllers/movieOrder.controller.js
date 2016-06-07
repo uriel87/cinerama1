@@ -2,24 +2,7 @@
 
 var MovieOrderSchema = require('mongoose').model('MovieOrder');
 
-// var movie = require('node-movie');
 
-// var movieTrailer = require('movie-trailer');
-
-
-
-// movie('Central Intelligence', function (err, data) {
-// 	console.log(data);
-// });
-
-
-
-// var movieTrailer = require('movie-trailer');
- 
-// movieTrailer('Central Intelligence', function (err, url) {
-//     console.log(url);
-//     //=> http://path/to/trailer 
-// });
 
 
 
@@ -50,6 +33,9 @@ exports.getAllMovies = function (req,res) {
 
 
 
+
+
+
 /* ----------------------------------
  *  set seat function
  * @param req
@@ -57,24 +43,84 @@ exports.getAllMovies = function (req,res) {
 -------------------------------------*/
 
 
-exports.getSeats = function(name, date, time, auditorium, seats) {
-	console.log('in getExcellenceStudent');
-	
-	var query = {
+exports.getMovieOrder = function(req,res) {
+	console.log('In controller getMovieOrder');
 
-		name: "Central Intelligence",
-		date: "1/1/2016",
-		time: "17:00",
-		auditorium: 1,
+	var query = {
+		name: req.body.name,
+		date: req.body.date,
+		time: req.body.time,
+		auditorium: req.body.auditorium
+	}
+
+	MovieOrderSchema.find(query,function (err, doc) {
+		if(err) {
+			console.log(err);
+			res.status(200).json({
+				status: "404",
+				msg: " Database error in function getMovieOrder, movieOrder.controller.js",
+				err: err
+			});
+		}
+		else {
+			console.log("controller getMovieOrder: " + doc);
+			res.status(200).json(doc);
+		}
+	})
+
+};
+
+
+
+
+
+
+/* ----------------------------------
+ *  set seat function
+ * @param req
+ * @param res
+-------------------------------------*/
+
+
+exports.setSeats = function(req,res) {
+	console.log('in controller getSeats');
+
+	console.log("req.body.row - " + req.body.row);
+	console.log("req.body.number - " + req.body.number);
+
+	var query = {
+		name: req.body.name,
+		date: req.body.date,
+		time: req.body.time,
+		auditorium: req.body.auditorium,
 
 		seats: {
 			$elemMatch: {
-				row: 1,
-				number: 1,
+				row: req.body.row,
+				number: req.body.number,
 				occupied: false
 			}
 		}
 	}
+
+
+	// var query = {
+
+	// 	name: "X-Men: Apocalypse",
+	// 	date: "1/1/2016",
+	// 	time: "17:00",
+	// 	auditorium: 2,
+
+	// 	seats: {
+	// 		$elemMatch: {
+	// 			row: 1,
+	// 			number: 1,
+	// 			occupied: false
+	// 		}
+	// 	}
+	// }
+
+	console.log(query.name + " " +  query.date + " " + query.time + " " + query.auditorium + " " + req.body.row + " " + req.body.number);
 
 	var setSeat = {		
 		$set:{
@@ -88,13 +134,13 @@ exports.getSeats = function(name, date, time, auditorium, seats) {
 			console.log(err);
 			res.status(200).json({
 				status: "404",
-				msg: " Database error in function getExcellenceStudent, studentController.js",
+				msg: " Database error in function setSeats, movieOrder.controller.js",
 				err: err
 			});
 		}
 		else
 			console.log(`The your seats was saved`);
-			console.log("DAO getExcellenceStudent: " + doc);
+			console.log("controller setSeats: " + doc);
 			res.status(200).json(doc);
 	});
 

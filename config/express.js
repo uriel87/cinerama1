@@ -19,16 +19,18 @@ module.exports = function() {
 	  next();
 	});
 
-	//app.set('Content-Type', 'text/plain');
+	app.set('Content-Type', 'text/plain');
 	app.set("json spaces", 4);
-	// app.use(bodyParser.json()); // for parsing application/json
-	// app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+	app.use(bodyParser.json()); // for parsing application/json
+	app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 
 	// Load the routing files
 	require('../app/routes/foodPruduct.route.js')(app);
 
 	require('../app/routes/movieOrder.route.js')(app);
+
+	require('../app/routes/movie.route.js')(app);
 
 	//Return the Express application instance
 	return app;
