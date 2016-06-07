@@ -10,6 +10,6 @@ module.exports = function(app) {
 
 	app.get('/getAllMovies', movieOrderController.getAllMovies)	// all products page
 
-	//app.get('/getAllMovies', movieOrderController.setSeat)	// all products page  
+	//app.get('/getSeats', movieOrderController.getSeats)	// all products page  
 
 };

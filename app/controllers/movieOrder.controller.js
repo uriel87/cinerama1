@@ -50,33 +50,55 @@ exports.getAllMovies = function (req,res) {
 
 
 
-// /* ----------------------------------
-//  *  set seat function
-//  * @param req
-//  * @param res
-// -------------------------------------*/
+/* ----------------------------------
+ *  set seat function
+ * @param req
+ * @param res
+-------------------------------------*/
 
 
-// exports.setSeat = function(row, newseats) {
-// 	console.log(`update document...`);
+exports.getSeats = function(name, date, time, auditorium, seats) {
+	console.log('in getExcellenceStudent');
+	
+	var query = {
 
-// 	var query = {
-// 		row: row
-// 	}
+		name: "Central Intelligence",
+		date: "1/1/2016",
+		time: "17:00",
+		auditorium: 1,
 
-// 	var attrSet = {
-// 		seat: false
-// 	}
+		seats: {
+			$elemMatch: {
+				row: 1,
+				number: 1,
+				occupied: false
+			}
+		}
+	}
 
-// 	MovieOrderSchema.findOneAndUpdate(query,attrSet, function(err, doc) {
-// 		if(err)
-// 			console.log(err);
-// 		else
-// 			console.log(`The document was updated`);
-// 			//mongoose.disconnect();
-// 	});
-// };
+	var setSeat = {		
+		$set:{
+	        'seats.$.occupied':true
+	    }
+	}
 
+
+	MovieOrderSchema.findOneAndUpdate(query,setSeat, function(err, doc) {
+		if(err) {
+			console.log(err);
+			res.status(200).json({
+				status: "404",
+				msg: " Database error in function getExcellenceStudent, studentController.js",
+				err: err
+			});
+		}
+		else
+			console.log(`The your seats was saved`);
+			console.log("DAO getExcellenceStudent: " + doc);
+			res.status(200).json(doc);
+	});
+
+};
 
 
 

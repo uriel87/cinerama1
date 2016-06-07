@@ -11,6 +11,8 @@ var mongoose = require("mongoose"),
 	schema = mongoose.Schema;
 
 
+
+
 var movieOrderSchema = new schema( {
 
 	name: String,
@@ -24,16 +26,16 @@ var movieOrderSchema = new schema( {
 
 	cinema: Number,
 
+	date: String,
+
 	time: String,
 
 	auditorium: Number,
 
 	seats: [{
-	    row: Number,
-	    seat : [{
-	    	number: Number,
-	    	occupied: Boolean
-	    }]
+	    row: { type: Number, unique: true },
+		seat: { type: Number, unique: true },
+		occupied: Boolean
 	}]
 
 
@@ -42,5 +44,3 @@ var movieOrderSchema = new schema( {
 
 // // Define schema name
 mongoose.model('MovieOrder',movieOrderSchema);
-
-
