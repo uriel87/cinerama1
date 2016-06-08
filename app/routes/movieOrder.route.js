@@ -10,6 +10,6 @@ module.exports = function(app) {
 
 	app.post('/getMovieOrder/', movieOrderController.getMovieOrder)	// one movie to show before order page 
 
-	app.post('/setSeats/', movieOrderController.setSeats)	// one movie to show before order page 
+	app.post('/setSeats/', movieOrderController.setSeats)	// save seats in the auditorium
 
 };

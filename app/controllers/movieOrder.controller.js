@@ -37,7 +37,7 @@ exports.getAllMovies = function (req,res) {
 
 
 /* ----------------------------------
- *  set seat function
+ * get one movie function
  * @param req
  * @param res
 -------------------------------------*/
@@ -76,7 +76,7 @@ exports.getMovieOrder = function(req,res) {
 
 
 /* ----------------------------------
- *  set seat function
+ * set seat function
  * @param req
  * @param res
 -------------------------------------*/
@@ -87,38 +87,22 @@ exports.setSeats = function(req,res) {
 
 	console.log("req.body.row - " + req.body.row);
 	console.log("req.body.number - " + req.body.number);
+	var number = req.body.number;
 
 	var query = {
 		name: req.body.name,
 		date: req.body.date,
 		time: req.body.time,
-		auditorium: req.body.auditorium,
+		auditorium: parseInt(req.body.auditorium),
 
 		seats: {
 			$elemMatch: {
-				row: req.body.row,
-				number: req.body.number,
+				row: parseInt(req.body.row),
+				number: parseInt(req.body.number),
 				occupied: false
 			}
 		}
-	}
-
-
-	// var query = {
-
-	// 	name: "X-Men: Apocalypse",
-	// 	date: "1/1/2016",
-	// 	time: "17:00",
-	// 	auditorium: 2,
-
-	// 	seats: {
-	// 		$elemMatch: {
-	// 			row: 1,
-	// 			number: 1,
-	// 			occupied: false
-	// 		}
-	// 	}
-	// }
+	};
 
 	console.log(query.name + " " +  query.date + " " + query.time + " " + query.auditorium + " " + req.body.row + " " + req.body.number);
 
