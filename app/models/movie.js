@@ -13,7 +13,7 @@ var mongoose = require("mongoose"),
 
 
 
-var movieOrderSchema = new schema( {
+var movieSchema = new schema( {
 
 	name: String,
 
@@ -24,13 +24,17 @@ var movieOrderSchema = new schema( {
 	    nice: { type: Number, default: 0 }
     },
 
-	cinema: Number,
+    category: String,
 
-	date: String,
+	cinema: String,
 
-	time: String,
+	branch: String,
+
+	time: Date,
 
 	auditorium: Number,
+
+	seatsLeft: Number,
 
 	seats: [{
 	    row: { type: Number, unique: true },
@@ -43,4 +47,4 @@ var movieOrderSchema = new schema( {
 
 
 // // Define schema name
-mongoose.model('MovieOrder',movieOrderSchema);
+mongoose.model('Movie',movieSchema);

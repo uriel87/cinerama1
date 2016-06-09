@@ -47,6 +47,6 @@ db.on('reconnected', function () {
 
 
 
-require('../app/models/product.model');
+require('../app/models/product');
 
-require('../app/models/movieOrder.model');
+require('../app/models/movie');
