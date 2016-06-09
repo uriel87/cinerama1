@@ -8,7 +8,7 @@ module.exports = function(app) {
 
 	app.post('/getAllMovies', movieController.getAllMovies)	// all movies page
 
-	app.post('/getMovieOrder/', movieController.getMovieOrder)	// one movie to show before order page
+	app.post('/getMovieDetails/', movieController.getMovieDetails)	// one movie to show before order page
 
 	app.post('/setSeats/', movieController.setSeats)	// save seats in the auditorium
 

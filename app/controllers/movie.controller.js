@@ -10,6 +10,7 @@ var movie = require('node-movie'),
 
 
 
+
 /* ----------------------------------
  * get all movies function
  * @param req
@@ -41,14 +42,14 @@ exports.getAllMovies = function (req,res) {
 
 
 /* ----------------------------------
- * get one movie function
+ * get one movie details function
  * @param req
  * @param res
 -------------------------------------*/
 
 
-exports.getMovieOrder = function(req,res) {
-	console.log('In controller getMovieOrder');
+exports.getMovieDetails = function(req,res) {
+	console.log('In controller getMovieDetails');
 
 	var query = {
 		name: req.body.name
@@ -59,7 +60,7 @@ exports.getMovieOrder = function(req,res) {
 			console.log(err);
 			res.status(200).json({
 				status: "404",
-				msg: " Database error in function getMovieOrder, movieOrder.controller.js",
+				msg: " Database error in function getMovieDetails, movieOrder.controller.js",
 				err: err
 			});
 		}
@@ -76,8 +77,13 @@ exports.getMovieOrder = function(req,res) {
 
 
 
+
+
+
+
+
 /* ----------------------------------
- * set seat function
+ * set seat in audituriom function
  * @param req
  * @param res
 -------------------------------------*/
@@ -85,10 +91,6 @@ exports.getMovieOrder = function(req,res) {
 
 exports.setSeats = function(req,res) {
 	console.log('in controller getSeats');
-
-	console.log("req.body.row - " + req.body.row);
-	console.log("req.body.number - " + req.body.number);
-	var number = req.body.number;
 
 	var query = {
 		name: req.body.name,
@@ -105,21 +107,18 @@ exports.setSeats = function(req,res) {
 		}
 	};
 
-	console.log(query.name + " " +  query.date + " " + query.time + " " + query.auditorium + " " + req.body.row + " " + req.body.number);
-
 	var setSeat = {		
 		$set:{
 	        'seats.$.occupied': true
 	    }
 	}
 
-
 	MovieOrderSchema.findOneAndUpdate(query,setSeat, function(err, doc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
 				status: "404",
-				msg: " Database error in function setSeats, movieOrder.controller.js",
+				msg: " Database error in function setSeats, movie.controller.js",
 				err: err
 			});
 		}
@@ -140,14 +139,14 @@ exports.setSeats = function(req,res) {
 
 
 /* ----------------------------------
- * get one movie function
+ * get more movie with some category
  * @param req
  * @param res
 -------------------------------------*/
 
 
 exports.getMovieCategory = function(req,res) {
-	console.log('In controller getMovieOrder');
+	console.log('In controller getMovieCategory');
 	var movieName = req.body.moviename;
 	movie(movieName,function (err, movieDoc) {
 		//movieCat = movieDoc.Genre;
@@ -159,18 +158,18 @@ exports.getMovieCategory = function(req,res) {
 			category: someCategoryArr[0],
 		}
 
-		MovieOrderSchema.find(query,function (err, doc) {
+		MovieOrderSchema.find(query,function (err, docSomeCategory) {
 			if(err) {
 				console.log(err);
 				res.status(200).json({
 					status: "404",
-					msg: " Database error in function getMovieOrder, movieOrder.controller.js",
+					msg: " Database error in function getMovieCategory, movieOrder.controller.js",
 					err: err
 				});
 			}
 			else {
-				console.log("controller getMovieOrder: " + doc);
-				res.status(200).json(doc);
+				console.log("controller getMovieCategory: " + docSomeCategory);
+				res.status(200).json(docSomeCategory);
 			}
 		})
 
@@ -246,13 +245,6 @@ exports.getMovieTrailer = function (req,res) {
 
 
 
-
-
-
-
-
-
-
 /* ----------------------------------
  * get reviews function
  * @param req
@@ -293,84 +285,6 @@ exports.getReviews = function(req,res) {
 	});
 
 };
-
-
-
-// .aggregate(
-//   {$match : {"_id.name" : "John"}},
-//   {$group : {_id : "$_id.name", 
-//              dollar : {$sum : "$value.types.dollar"}, 
-//              euro : {$sum : "$value.types.euro"}, 
-//              unknown : {$sum : "$value.types.unknown"}}}
-// )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Todo choose movie
-/* ----------------------------------
- * get one movie function
- * @param req
- * @param res
--------------------------------------*/
-
-
-
-// exports.getMovieOrder = function(req,res) {
-// 	console.log('In controller getMovieOrder');
-
-// 	var query = {
-// 		name: req.body.name//,
-// 		// cinema: req.body.cinema,
-// 		// date: req.body.date,
-// 		// time: req.body.time,
-// 		// auditorium: req.body.auditorium
-// 	}
-
-// 	MovieOrderSchema.find(query,function (err, doc) {
-// 		if(err) {
-// 			console.log(err);
-// 			res.status(200).json({
-// 				status: "404",
-// 				msg: " Database error in function getMovieOrder, movieOrder.controller.js",
-// 				err: err
-// 			});
-// 		}
-// 		else {
-// 			dateFormat.masks.time = 'HH:MM';
-// 			//console.log('mmmmeee' + jsonsty(doc.date))
-// 			//console.log(Date.parse(doc.date));
-// 			// var d = new Date(doc.date);
-// 			console.dir(doc);
-// 			// dateFormat(doc.time,  'isoTime');	
-// 			// console.log(dateFormat(doc.time,  'isoTime'));
-// 			// console.log("controller getMovieOrder: " + doc);
-// 			res.status(200).json(doc);
-// 		}
-// 	})
-
-// };
-
-
-
-
-
-
-
-
-
 
 
 
