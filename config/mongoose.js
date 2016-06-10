@@ -50,3 +50,5 @@ db.on('reconnected', function () {
 require('../app/models/product');
 
 require('../app/models/movie');
+
+require('../app/models/user');

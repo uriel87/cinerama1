@@ -15,6 +15,8 @@ var mongoose = require("mongoose"),
 
 var movieSchema = new schema( {
 
+	id: { type: Number, unique: true },
+
 	name: String,
 
 	review: {

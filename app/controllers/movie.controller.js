@@ -1,7 +1,7 @@
 
 var movie = require('node-movie'),
 	movieTrailer = require('movie-trailer'),
-	MovieOrderSchema = require('mongoose').model('Movie'),
+	MovieSchema = require('mongoose').model('Movie'),
 	_ = require('underscore'),
 	dateFormat = require('dateformat'),
 	formatDate = require('format-date');
@@ -20,7 +20,7 @@ var movie = require('node-movie'),
 
 exports.getAllMovies = function (req,res) {
 	console.log('in controller getAllMovies');
-	MovieOrderSchema.find({},function (err, movieDoc) {
+	MovieSchema.find({},function (err, movieDoc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -55,7 +55,7 @@ exports.getMovieDetails = function(req,res) {
 		name: req.body.name
 	}
 
-	MovieOrderSchema.find(query,function (err, doc) {
+	MovieSchema.find(query,function (err, doc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -113,7 +113,7 @@ exports.setSeats = function(req,res) {
 	    }
 	}
 
-	MovieOrderSchema.findOneAndUpdate(query,setSeat, function(err, doc) {
+	MovieSchema.findOneAndUpdate(query,setSeat, function(err, doc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -123,7 +123,6 @@ exports.setSeats = function(req,res) {
 			});
 		}
 		else
-			console.log(`The your seats was saved`);
 			console.log("controller setSeats: " + doc);
 			res.status(200).json(doc);
 	});
@@ -147,7 +146,7 @@ exports.setSeats = function(req,res) {
 
 exports.getMovieCategory = function(req,res) {
 	console.log('In controller getMovieCategory');
-	var movieName = req.body.moviename;
+	var movieName = req.body.name;
 	movie(movieName,function (err, movieDoc) {
 		//movieCat = movieDoc.Genre;
 		var movieCat = movieDoc.Genre.split(",");
@@ -158,7 +157,7 @@ exports.getMovieCategory = function(req,res) {
 			category: someCategoryArr[0],
 		}
 
-		MovieOrderSchema.find(query,function (err, docSomeCategory) {
+		MovieSchema.find(query,function (err, docSomeCategory) {
 			if(err) {
 				console.log(err);
 				res.status(200).json({
@@ -190,7 +189,7 @@ exports.getMovieCategory = function(req,res) {
 
 exports.getMovie = function (req,res) {
 	console.log('in controller getMovie');
-	var movieName = req.body.moviename;
+	var movieName = req.body.name;
 	movie(movieName,function (err, movieDoc) {
 		if(err) {
 			console.log(err);
@@ -221,7 +220,7 @@ exports.getMovie = function (req,res) {
 
 exports.getMovieTrailer = function (req,res) {
 	console.log('in controller getMovieTrailer');
-	var movieName = req.body.moviename;
+	var movieName = req.body.name;
 	movieTrailer(movieName,function (err, movieTrailerDoc) {
 		if(err) {
 			console.log(err);
@@ -255,17 +254,15 @@ exports.getMovieTrailer = function (req,res) {
 exports.getReviews = function(req,res) {
 	console.log('in controller getReviews');
 
-	var aggregate = MovieOrderSchema.aggregate();
+	var aggregate = MovieSchema.aggregate();
 
-	aggregate.match( {name: req.body.moviename });
-
-	console.log(req.body.moviename);
+	aggregate.match( {name: req.body.name });
 
 	var sumReview = {
 		_id: '$name',
         lame: {$sum: '$review.lame'},
-        wtf: {$sum: "$review.wtf"},
-        wow: {$sum: "$review.wow"},
+        wtf: {$sum: '$review.wtf'},
+        wow: {$sum: '$review.wow'},
         nice: {$sum: '$review.nice'}
 	}
 
