@@ -138,3 +138,66 @@ exports.getMovieUser = function(req, res) {
 
 
 
+
+
+
+/* ----------------------------------
+ * push new review
+ * @param req
+ * @param res
+-------------------------------------*/
+
+
+exports.pushReview = function(req, res) {
+	console.log('in controller pushReview');
+
+
+	console.log('req.body.email - ' + req.body.email + ", req.body.movieid - " + req.body.movieid);
+
+
+	var commentsArr = ["lame", "wtf", "wow", "nice"];
+
+	if( commentsArr.indexOf(req.body.review) < 0) {
+		console.log("Eroor, comment invalid");
+		return res.status(200).json("Eroor, comment invalid");
+	}
+
+	var query = {
+		email: req.body.email,
+		orders: {
+			$elemMatch: {
+				movieId: req.body.movieid,
+				commitPush: false
+			}
+		}
+	}
+
+	var setSeat = {		
+		$set:{
+			'orders.$.commitPush': true,
+			'orders.$.comment': req.body.comment,
+			'orders.$.review': req.body.review
+	    }
+	}
+
+	userSchema.findOneAndUpdate(query, updateData, function (err, userDoc) {
+		if(err) {
+			console.log(err);
+			res.status(200).json({
+				status: "404",
+				msg: " Database error in function pushReview, user.controller.js",
+				err: err
+			});
+		}
+		else {
+			console.log("controller pushReview: " + userDoc);
+			res.status(200).json(userDoc);
+		}
+	})
+
+};
+
+
+
+
+

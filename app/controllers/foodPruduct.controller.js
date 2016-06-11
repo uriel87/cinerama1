@@ -45,7 +45,7 @@ exports.getProduct = function(req, res) {
 		name: productName
 	}
 
-	productSchema.find(query,function (err, productDoc) {
+	productSchema.findOne(query,function (err, productDoc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({

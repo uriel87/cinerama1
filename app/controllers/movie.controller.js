@@ -2,6 +2,7 @@
 var movie = require('node-movie'),
 	movieTrailer = require('movie-trailer'),
 	MovieSchema = require('mongoose').model('Movie'),
+	userSchema = require('mongoose').model('User'),
 	_ = require('underscore'),
 	dateFormat = require('dateformat'),
 	formatDate = require('format-date');
@@ -11,11 +12,11 @@ var movie = require('node-movie'),
 
 
 
-/* ----------------------------------
+/* ----------------------------------------------------
  * get all movies function
  * @param req
  * @param res
--------------------------------------*/
+-------------------------------------------------------*/
 
 
 exports.getAllMovies = function (req,res) {
@@ -41,11 +42,11 @@ exports.getAllMovies = function (req,res) {
 
 
 
-/* ----------------------------------
+/* ----------------------------------------------------
  * get one movie details function
  * @param req
  * @param res
--------------------------------------*/
+-------------------------------------------------------*/
 
 
 exports.getMovieDetails = function(req,res) {
@@ -82,11 +83,11 @@ exports.getMovieDetails = function(req,res) {
 
 
 
-/* ----------------------------------
+/* ----------------------------------------------------
  * set seat in audituriom function
  * @param req
  * @param res
--------------------------------------*/
+-------------------------------------------------------*/
 
 
 exports.setSeats = function(req,res) {
@@ -107,7 +108,7 @@ exports.setSeats = function(req,res) {
 		}
 	};
 
-	var setSeat = {		
+	var setSeat = {
 		$set:{
 	        'seats.$.occupied': true
 	    }
@@ -125,6 +126,12 @@ exports.setSeats = function(req,res) {
 		else
 			console.log("controller setSeats: " + doc);
 			res.status(200).json(doc);
+
+
+			//TODO add to the user this moview
+
+
+
 	});
 
 };
@@ -137,11 +144,11 @@ exports.setSeats = function(req,res) {
 
 
 
-/* ----------------------------------
+/* ----------------------------------------------------
  * get more movie with some category
  * @param req
  * @param res
--------------------------------------*/
+-------------------------------------------------------*/
 
 
 exports.getMovieCategory = function(req,res) {
@@ -154,7 +161,7 @@ exports.getMovieCategory = function(req,res) {
 		someCategoryArr = findSomeCategory(movieCat);
 
 		var query = {
-			category: someCategoryArr[0],
+			category: someCategoryArr[0]
 		}
 
 		MovieSchema.find(query,function (err, docSomeCategory) {
@@ -180,11 +187,11 @@ exports.getMovieCategory = function(req,res) {
 
 
 
-/* ----------------------------------
+/* ----------------------------------------------------
  * get Movie details
  * @param req
  * @param res
--------------------------------------*/
+-------------------------------------------------------*/
 
 
 exports.getMovie = function (req,res) {
@@ -211,11 +218,11 @@ exports.getMovie = function (req,res) {
 
 
 
-/* ----------------------------------
+/* ----------------------------------------------------
  * get Movie trailer url
  * @param req
  * @param res
--------------------------------------*/
+-------------------------------------------------------*/
 
 
 exports.getMovieTrailer = function (req,res) {
@@ -244,11 +251,11 @@ exports.getMovieTrailer = function (req,res) {
 
 
 
-/* ----------------------------------
+/* ----------------------------------------------------
  * get reviews function
  * @param req
  * @param res
--------------------------------------*/
+-------------------------------------------------------*/
 
 
 exports.getReviews = function(req,res) {
@@ -278,6 +285,48 @@ exports.getReviews = function(req,res) {
 		}
 		else
 			console.log("controller getReviews: " + reviewDoc);
+			res.status(200).json(reviewDoc);
+	});
+
+};
+
+
+
+
+
+
+/* ----------------------------------------------------
+ * get user comment for specific movie function
+ * @param req
+ * @param res
+-------------------------------------------------------*/
+
+
+exports.getUserComment = function(req,res) {
+	console.log('in controller getUserComment');
+
+	var movieName = req.body.name;
+
+	var query = {
+
+		orders: {
+			$elemMatch: {
+				movieName: movieName
+			}
+		}
+	}
+
+	userSchema.findOne(function(err, reviewDoc){
+		if(err) {
+			console.log(err);
+			res.status(200).json({
+				status: "404",
+				msg: " Database error in function getUserComment, movie.controller.js",
+				err: err
+			});
+		}
+		else
+			console.log("controller getUserComment: " + reviewDoc);
 			res.status(200).json(reviewDoc);
 	});
 

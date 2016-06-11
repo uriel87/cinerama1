@@ -16,8 +16,10 @@ module.exports = function(app) {
 
 	app.post('/getMovieTrailer/', movieController.getMovieTrailer)	// get movie trailer page
 
-	app.post('/getMovieCategory/', movieController.getMovieCategory)	// get movie trailer page
+	app.post('/getMovieCategory/', movieController.getMovieCategory)	// get movie category page
 
-	app.post('/getReviews/', movieController.getReviews)	// get movie trailer page
+	app.post('/getReviews/', movieController.getReviews)	// get sum reviews trailer page
+
+	app.post('/getUserComment/', movieController.getUserComment)	// get user comment trailer page
 
 };
