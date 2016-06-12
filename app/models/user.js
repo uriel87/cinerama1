@@ -23,7 +23,7 @@ var userSchema = new schema( {
 	    movieId: { type: Number, unique: true },
 		review: {type: String, enum: ['lame', 'wtf', 'wow', 'nice'], default: ""}, 
 		comment: {type: String, default: ""}, 
-		commitPush: Boolean
+		commitPush: {type: Boolean, default: false}, 
 	}]
 
 }, {collection: 'users'});

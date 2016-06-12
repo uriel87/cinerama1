@@ -95,8 +95,9 @@ exports.setSeats = function(req,res) {
 
 	var query = {
 		name: req.body.name,
-		date: req.body.date,
-		time: req.body.time,
+		//date: Date.parse(req.body.date),
+		cinema: req.body.cinema,
+		branch: req.body.branch,
 		auditorium: parseInt(req.body.auditorium),
 
 		seats: {
@@ -109,12 +110,13 @@ exports.setSeats = function(req,res) {
 	};
 
 	var setSeat = {
+		$inc: { seatsLeft: -1 },
 		$set:{
 	        'seats.$.occupied': true
 	    }
 	}
 
-	MovieSchema.findOneAndUpdate(query,setSeat, function(err, doc) {
+	MovieSchema.findOneAndUpdate(query,setSeat, function(err, movieDoc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -123,14 +125,37 @@ exports.setSeats = function(req,res) {
 				err: err
 			});
 		}
-		else
-			console.log("controller setSeats: " + doc);
-			res.status(200).json(doc);
+		else {
 
+			movieId = movieDoc["id"];
 
-			//TODO add to the user this moview
+			var query = {
+				email: req.body.email
+			}
 
+			var addCommentUser = {
+				$push: {
+		        	orders: {
+		        		movieId: movieId
+		        	}
+				}
+			}
 
+			userSchema.findOneAndUpdate(query, addCommentUser, function (err, userDoc) {
+				if(err) {
+					console.log(err);
+					res.status(200).json({
+						status: "404",
+						msg: " Database error in function getUser, user.controller.js",
+						err: err
+					});
+				}
+				else {
+					console.log("controller getUser: " + userDoc);
+					res.status(200).json(userDoc);
+				}
+			})
+		}
 
 	});
 

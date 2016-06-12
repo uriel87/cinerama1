@@ -42,9 +42,6 @@ exports.getAllUsers = function (req,res) {
 
 exports.getUser = function(req, res) {
 	console.log('in controller getUser');
-	console.log('req.params.email - ' + req.body.email);
-
-	console.log('Type of - ' + typeof req.body.email);
 
 	var query = {
 		email: req.body.email
@@ -151,10 +148,6 @@ exports.getMovieUser = function(req, res) {
 exports.pushReview = function(req, res) {
 	console.log('in controller pushReview');
 
-
-	console.log('req.body.email - ' + req.body.email + ", req.body.movieid - " + req.body.movieid);
-
-
 	var commentsArr = ["lame", "wtf", "wow", "nice"];
 
 	if( commentsArr.indexOf(req.body.review) < 0) {
@@ -172,7 +165,7 @@ exports.pushReview = function(req, res) {
 		}
 	}
 
-	var setSeat = {		
+	var setSeat = {
 		$set:{
 			'orders.$.commitPush': true,
 			'orders.$.comment': req.body.comment,
