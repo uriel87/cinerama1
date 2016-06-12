@@ -10,7 +10,7 @@ module.exports = function(app) {
 
 	app.post('/getMovieDetails/', movieController.getMovieDetails)	// one movie to show before order page
 
-	app.post('/setSeats/', movieController.setSeats)	// save seats in the auditorium
+	app.post('/setOrderMovie/', movieController.setOrderMovie)	// save seats in the auditorium
 
 	app.post('/getMovie/', movieController.getMovie)	// get movie details page
 

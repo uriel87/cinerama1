@@ -90,8 +90,8 @@ exports.getMovieDetails = function(req,res) {
 -------------------------------------------------------*/
 
 
-exports.setSeats = function(req,res) {
-	console.log('in controller getSeats');
+exports.setOrderMovie = function(req,res) {
+	console.log('in controller setOrderMovie');
 
 	var query = {
 		name: req.body.name,
@@ -121,7 +121,7 @@ exports.setSeats = function(req,res) {
 			console.log(err);
 			res.status(200).json({
 				status: "404",
-				msg: " Database error in function setSeats, movie.controller.js",
+				msg: " Database error in function setOrderMovie, movie.controller.js",
 				err: err
 			});
 		}
@@ -146,7 +146,7 @@ exports.setSeats = function(req,res) {
 					console.log(err);
 					res.status(200).json({
 						status: "404",
-						msg: " Database error in function getUser, user.controller.js",
+						msg: " Database error in function setOrderMovie, movie.controller.js",
 						err: err
 					});
 				}
