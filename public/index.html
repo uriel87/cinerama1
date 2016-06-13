@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app = "">
+<html ng-app = "index">
 	<head>
 	<title>Web service Ex1</title>
 		<meta charset="UTF-8">
@@ -7,21 +7,29 @@
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 	</head>
-	<body ng-controller = "" >
+	<body ng-controller = "moviesCtl" >
 		<header>
 
 
 		</header>
 		<main>
-
-
+			<div ng-repeat="movie in movies | orderBy:'movies._id.time'">
+		    	<li>{{movie._id.name}}</li>
+		    	<li>{{movie._id.time.substring(0,10)}}</li>
+		    	<li>{{movie._id.time.substring(11,19)}}</li>
+		    	<li>{{movie._id.auditorium}}</li>
+		    	<li>{{movie._id.branch}}</li> 
+		    	<li>{{movie._id.seatsLeft}}</li>
+		    </div>
 		</main>
 		<footer>
 			
 		</footer>
-		<script src="js/lib/angular/angular.min.js"></script>
-		<script src="js/.js"></script>
+		<script type="text/javascript" src="js/lib/jquery/jquery-2.1.4.js"></script>
+		<script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
+		<!-- <script type="text/javascript" src="js/lib/angular/angular-ui-router.min.js"></script> -->
+		<script src="js/movie.controller.js"></script>
+		<!-- <script src="js/user.controller.js"></script> -->
 	</body>
 </html>
-
 

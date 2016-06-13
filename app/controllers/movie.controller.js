@@ -5,7 +5,8 @@ var movie = require('node-movie'),
 	userSchema = require('mongoose').model('User'),
 	_ = require('underscore'),
 	dateFormat = require('dateformat'),
-	formatDate = require('format-date');
+	formatDate = require('format-date'),
+	merge = require('merge');
 
 
 
@@ -21,7 +22,23 @@ var movie = require('node-movie'),
 
 exports.getAllMovies = function (req,res) {
 	console.log('in controller getAllMovies');
-	MovieSchema.find({},function (err, movieDoc) {
+
+	var aggregate = MovieSchema.aggregate();
+
+	var movieDetails = {
+		_id: {
+			name: '$name',
+			cinema: '$cinema',
+			branch: '$branch',
+			time: '$time',
+			auditorium: '$auditorium',
+			seatsLeft: '$seatsLeft'
+		}
+	}
+
+	aggregate.group(movieDetails);
+
+	aggregate.exec(function (err, movieDoc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -52,11 +69,24 @@ exports.getAllMovies = function (req,res) {
 exports.getMovieDetails = function(req,res) {
 	console.log('In controller getMovieDetails');
 
-	var query = {
-		name: req.body.name
+	var aggregate = MovieSchema.aggregate();
+
+	aggregate.match( {name: req.body.name} );
+
+	var movieDetails = {
+		_id: {
+			name: '$name',
+			cinema: '$cinema',
+			branch: '$branch',
+			time: '$time',
+			auditorium: '$auditorium',
+			seatsLeft: '$seatsLeft'
+		}
 	}
 
-	MovieSchema.find(query,function (err, doc) {
+	aggregate.group(movieDetails);
+
+	aggregate.exec(function (err, doc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -66,8 +96,21 @@ exports.getMovieDetails = function(req,res) {
 			});
 		}
 		else {
-			console.dir(doc);
-			res.status(200).json(doc);
+			movie(req.body.name,function (err, movieDoc) {
+			if(err) {
+				console.log(err);
+				res.status(200).json({
+					status: "404",
+					msg: " Database error in function getMovie, movie.controller.js",
+					err: err
+				});
+			}
+			else {
+				doc.push(movieDoc);
+				console.dir(doc);
+				res.status(200).json(doc);
+			}
+		});
 		}
 	})
 
@@ -373,13 +416,6 @@ function findSomeCategory(categoryForResult) {
 
 	return _.intersection(categoty, categoryForResult);
 }
-
-
-
-
-
-
-
 
 
 
