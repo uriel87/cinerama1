@@ -4,7 +4,7 @@ var movie = require('node-movie'),
 	MovieSchema = require('mongoose').model('Movie'),
 	userSchema = require('mongoose').model('User'),
 	ReviewSchema = require('mongoose').model('review'),
-	_ = require('underscore'),
+	//_ = require('underscore'),
 	dateFormat = require('dateformat'),
 	formatDate = require('format-date'),
 	merge = require('merge');
@@ -373,18 +373,18 @@ exports.getUserComment = function(req,res) {
 
 
 
-function findSomeCategory(categoryForResult) {
+// function findSomeCategory(categoryForResult) {
 
-	var categoty = [
-		"Action", "Adventure", "Animation", "Biography",
-		"Comedy","Crime", "Documentary", "Drama",
-		"Family", "Fantasy", "History", "Horror",
-		"Music", "Mystery", "Romance", "Sci-Fi", "Sport",
-		"Thriller", "War"
-	]
+// 	var categoty = [
+// 		"Action", "Adventure", "Animation", "Biography",
+// 		"Comedy","Crime", "Documentary", "Drama",
+// 		"Family", "Fantasy", "History", "Horror",
+// 		"Music", "Mystery", "Romance", "Sci-Fi", "Sport",
+// 		"Thriller", "War"
+// 	]
 
-	return _.intersection(categoty, categoryForResult);
-}
+// 	return _.intersection(categoty, categoryForResult);
+// }
 
 
 
