@@ -11,7 +11,7 @@ app.controller('moviesCtl', ['$scope', '$http',function($scope, $http) {
 		$scope.movies = data;
 		console.log(data);
 	}).error(function () {
-		return "error was happened"
+		return "error was happened or the result is empty";
 	});
 
 }]);

@@ -52,3 +52,7 @@ require('../app/models/product');
 require('../app/models/movie');
 
 require('../app/models/user');
+
+require('../app/models/review');
+
+

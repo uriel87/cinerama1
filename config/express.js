@@ -32,6 +32,8 @@ module.exports = function() {
 
 	require('../app/routes/movie.route.js')(app);
 
+	require('../app/routes/review.route.js')(app);
+
 	//Return the Express application instance
 	return app;
 

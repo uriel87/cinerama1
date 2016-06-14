@@ -19,13 +19,6 @@ var movieSchema = new schema( {
 
 	name: String,
 
-	review: {
-	    lame: { type: Number, default: 0 },
-	    wtf: { type: Number, default: 0 },
-	    wow: { type: Number, default: 0 },
-	    nice: { type: Number, default: 0 }
-    },
-
     category: String,
 
 	cinema: String,

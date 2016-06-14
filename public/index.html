@@ -13,7 +13,7 @@
 
 		</header>
 		<main>
-			<div ng-repeat="movie in movies | orderBy:'movies._id.time'">
+			<div ng-repeat = "movie in movies | orderBy: ['-movies._id.time','movies._id.name'] : 'true'">
 		    	<li>{{movie._id.name}}</li>
 		    	<li>{{movie._id.time.substring(0,10)}}</li>
 		    	<li>{{movie._id.time.substring(11,19)}}</li>

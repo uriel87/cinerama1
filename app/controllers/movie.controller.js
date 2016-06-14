@@ -3,6 +3,7 @@ var movie = require('node-movie'),
 	movieTrailer = require('movie-trailer'),
 	MovieSchema = require('mongoose').model('Movie'),
 	userSchema = require('mongoose').model('User'),
+	ReviewSchema = require('mongoose').model('review'),
 	_ = require('underscore'),
 	dateFormat = require('dateformat'),
 	formatDate = require('format-date'),
@@ -36,7 +37,13 @@ exports.getAllMovies = function (req,res) {
 		}
 	}
 
-	aggregate.group(movieDetails);
+	var sortMovie = {
+		time: -1,
+		name: -1,
+		seatsLeft: 1
+	}
+
+	aggregate.sort(sortMovie).group(movieDetails);
 
 	aggregate.exec(function (err, movieDoc) {
 		if(err) {
@@ -107,7 +114,7 @@ exports.getMovieDetails = function(req,res) {
 			}
 			else {
 				doc.push(movieDoc);
-				console.dir(doc);
+				console.log(doc);
 				res.status(200).json(doc);
 			}
 		});
@@ -159,7 +166,7 @@ exports.setOrderMovie = function(req,res) {
 	    }
 	}
 
-	MovieSchema.findOneAndUpdate(query,setSeat, function(err, movieDoc) {
+	MovieSchema.findOneAndUpdate(query,setSeat, {new: true}, function(err, movieDoc) {
 		if(err) {
 			console.log(err);
 			res.status(200).json({
@@ -169,9 +176,7 @@ exports.setOrderMovie = function(req,res) {
 			});
 		}
 		else {
-
-			movieId = movieDoc["id"];
-
+			movieId = parseInt(movieDoc['id']);
 			var query = {
 				email: req.body.email
 			}
@@ -184,7 +189,7 @@ exports.setOrderMovie = function(req,res) {
 				}
 			}
 
-			userSchema.findOneAndUpdate(query, addCommentUser, function (err, userDoc) {
+			userSchema.findOneAndUpdate(query, addCommentUser, {new: true}, function (err, userDoc) {
 				if(err) {
 					console.log(err);
 					res.status(200).json({
@@ -319,44 +324,6 @@ exports.getMovieTrailer = function (req,res) {
 
 
 
-/* ----------------------------------------------------
- * get reviews function
- * @param req
- * @param res
--------------------------------------------------------*/
-
-
-exports.getReviews = function(req,res) {
-	console.log('in controller getReviews');
-
-	var aggregate = MovieSchema.aggregate();
-
-	aggregate.match( {name: req.body.name });
-
-	var sumReview = {
-		_id: '$name',
-        lame: {$sum: '$review.lame'},
-        wtf: {$sum: '$review.wtf'},
-        wow: {$sum: '$review.wow'},
-        nice: {$sum: '$review.nice'}
-	}
-
-	aggregate.group(sumReview);
-	aggregate.exec(function(err, reviewDoc){
-		if(err) {
-			console.log(err);
-			res.status(200).json({
-				status: "404",
-				msg: " Database error in function getReviews, movie.controller.js",
-				err: err
-			});
-		}
-		else
-			console.log("controller getReviews: " + reviewDoc);
-			res.status(200).json(reviewDoc);
-	});
-
-};
 
 
 
@@ -404,6 +371,8 @@ exports.getUserComment = function(req,res) {
 
 
 
+
+
 function findSomeCategory(categoryForResult) {
 
 	var categoty = [
@@ -418,4 +387,150 @@ function findSomeCategory(categoryForResult) {
 }
 
 
+
+// /* ----------------------------------------------------
+//  * get movies for index page function
+//  * @param req
+//  * @param res
+// -------------------------------------------------------*/
+
+
+// exports.getMoviesIndex = function(req,res) {
+// 	console.log('in controller getUserComment');
+
+// 	ReviewSchema.distinct("name",{},function (err, moviesDoc) {
+// 		if(err) {
+// 			console.log(err);
+// 			res.status(200).json({
+// 				status: "404",
+// 				msg: "Database error in function getMovieUser, user.controller.js",
+// 				err: err
+// 			});
+// 		}
+// 		else {
+
+// 			console.log("controller getMovieUser: " + moviesDoc);
+// 			//res.status(200).json(moviesDoc);
+
+// 			var aggregate = MovieSchema.aggregate();
+
+// 			aggregate.match( {name: { $in: moviesDoc }} );
+
+// 			var sumReview = {
+// 				_id: {
+// 					name: '$name',
+// 					cinema: '$cinema',
+// 					branch: '$branch',
+// 					time: '$time',
+// 					auditorium: '$auditorium',
+// 					seatsLeft: '$seatsLeft'
+// 				} 
+// 			}
+
+// 			aggregate.group(sumReview);
+
+// 			aggregate.exec(function (err, moviesUserDoc) {
+// 				if(err) {
+// 					console.log(err);
+// 					res.status(200).json({
+// 						status: "404",
+// 						msg: "Database error in function getMovieUser, user.controller.js",
+// 						err: err
+// 					});
+// 				}
+// 				else {
+// 					console.log("controller getMovieUser: " + moviesUserDoc);
+// 					res.status(200).json(moviesUserDoc);
+// 				}
+// 			});
+// 		}
+// 	});
+// };
+
+
+
+
+
+// exports.getMovieDetails = function(req,res) {
+
+
+// 	var aggregate = ReviewSchema.aggregate();
+
+// 	//aggregate.match( {id: { $in: userDoc }} );
+
+// 	var sumReview = {
+// 		_id: {
+// 			name: '$name',
+// 		}
+// 	}
+
+// 	aggregate.group(sumReview);
+
+// 	aggregate.exec(function (err, moviesUserDoc) {
+// 		if(err) {
+// 			console.log(err);
+// 			res.status(200).json({
+// 				status: "404",
+// 				msg: "Database error in function getMovieUser, user.controller.js",
+// 				err: err
+// 			});
+// 		}
+// 		else {
+// 			console.log("controller getMovieUser: " + moviesUserDoc);
+// 			//res.status(200).json(moviesUserDoc);
+// 	// 	}
+// 	// });
+
+// 			console.log('In controller getMovieDetails');
+
+// 			var aggregate = MovieSchema.aggregate();
+
+// 			aggregate.match( {id: { $in: userDoc }} );
+
+// 			//aggregate.match( {name: req.body.name} );
+
+// 			var movieDetails = {
+// 				_id: {
+// 					name: '$name',
+// 					cinema: '$cinema',
+// 					branch: '$branch',
+// 					time: '$time',
+// 					auditorium: '$auditorium',
+// 					seatsLeft: '$seatsLeft'
+// 				}
+// 			}
+
+// 			aggregate.group(movieDetails);
+
+// 			aggregate.exec(function (err, doc) {
+// 				if(err) {
+// 					console.log(err);
+// 					res.status(200).json({
+// 						status: "404",
+// 						msg: " Database error in function getMovieDetails, movieOrder.controller.js",
+// 						err: err
+// 					});
+// 				}
+// 				else {
+// 					movie(req.body.name,function (err, movieDoc) {
+// 					if(err) {
+// 						console.log(err);
+// 						res.status(200).json({
+// 							status: "404",
+// 							msg: " Database error in function getMovie, movie.controller.js",
+// 							err: err
+// 						});
+// 					}
+// 					else {
+// 						//doc.push(movieDoc);
+// 						console.log(doc);
+// 						res.status(200).json(doc);
+// 					}
+// 				});
+// 				}
+// 			})
+// 		}
+// 	});
+
+// };
 
