@@ -23,7 +23,6 @@
                 <span>Director: {{movieDetails.Director}}</span>
                 <span>Actors: {{movieDetails.Actors}}</span>
                 <span>imdbRating: {{movieDetails.imdbRating}}</span>
-
             </div>
 
 
@@ -39,9 +38,22 @@
                 <span>nice: {{review[0].nice}}</span>
             </div>
 
+
+            <div ng-repeat = "movie in movies">
+                <li>{{movie._id.name}}</li>
+                <li>{{movie._id.time.substring(0,10)}}</li>
+                <li>{{movie._id.time.substring(11,19)}}</li>
+                <li>{{movie._id.auditorium}}</li>
+                <li>{{movie._id.branch}}</li> 
+                <li>{{movie._id.seatsLeft}}</li>
+            </div>
+
             <form>
 
             </form>
+
+
+            <a href="payment.html">Buy</a>
 
         </main>
 
