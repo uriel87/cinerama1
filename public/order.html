@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app = "orderMovie">
+    <head>
+        <meta charset="UTF-8">
+        <title>Order movie</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    </head>
+    <body ng-controller = "orderCtl">
+
+        <header>
+
+        </header>
+
+<!--         <iframe src="{{movieTrailer}}"></iframe>
+        <iframe src={{movieTrailer}} frameborder="0"/></iframe> -->
+
+        <main>
+            <div>
+                <span>Genre: {{movieDetails.Genre}}</span>
+                <span>Director: {{movieDetails.Director}}</span>
+                <span>Actors: {{movieDetails.Actors}}</span>
+                <span>imdbRating: {{movieDetails.imdbRating}}</span>
+
+            </div>
+
+
+
+            <div id="review">
+
+                <div>
+                    {{reviews[0].comment}}
+                </div>
+                <span>lame: {{review[0].lame}}</span>
+                <span>wow: {{review[0].wow}}</span>
+                <span>wtf: {{review[0].wtf}}</span>
+                <span>nice: {{review[0].nice}}</span>
+            </div>
+
+            <form>
+
+            </form>
+
+        </main>
+
+        <footer >
+
+        </footer>
+        <script type="text/javascript" src="js/lib/jquery/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
+        <script src="js/orderMovie.controller.js"></script>
+    </body>
+</html>

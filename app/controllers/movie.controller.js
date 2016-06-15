@@ -102,22 +102,9 @@ exports.getMovieDetails = function(req,res) {
 				err: err
 			});
 		}
-		else {
-			movie(req.body.name,function (err, movieDoc) {
-			if(err) {
-				console.log(err);
-				res.status(200).json({
-					status: "404",
-					msg: " Database error in function getMovie, movie.controller.js",
-					err: err
-				});
-			}
-			else {
-				doc.push(movieDoc);
-				console.log(doc);
-				res.status(200).json(doc);
-			}
-		});
+		else {		
+			console.log(doc);
+			res.status(200).json(doc);
 		}
 	})
 

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html ng-app = "payment">
+    <head>
+        <meta charset="UTF-8">
+        <title>Payment</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    </head>
+    <body ng-controller = "paymentCtl">
+
+        <header>
+
+        </header>
+
+        <main>
+            <form>
+                <fieldset class="form-group">
+                <label for="formGroupExampleInput">Name on card</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                </fieldset>
+                <fieldset class="form-group">
+                <label for="formGroupExampleInput2">Credit number</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+                </fieldset>
+                <fieldset class="form-group">
+                <label for="formGroupExampleInput">Example label</label>
+                    <input type="date" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                </fieldset>
+                <fieldset class="form-group">
+                <label for="formGroupExampleInput2">CVV</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+                </fieldset>
+                <p>Total 2 tikets</p>
+                <button type="button" class="btn btn-success">Pay 75 NIS</button>
+            </form>
+
+            <div ng-repeat = "product in products" class="productBox">
+                <li>{{product.name}}</li>
+                <img src="{{product.image}}" alt="{{product.name}}">
+                <li>{{product.size}}</li> 
+                <li>{{product.price}}</li>
+            <div>
+
+        </main>
+
+        <footer >
+
+        </footer>
+        <script type="text/javascript" src="js/lib/jquery/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
+        <script src="js/pruducts.controller.js"></script>
+    </body>
+</html>

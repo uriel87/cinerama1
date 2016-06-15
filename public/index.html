@@ -1,35 +1,243 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app = "index">
-	<head>
-	<title>Web service Ex1</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
-		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-	</head>
-	<body ng-controller = "moviesCtl" >
-		<header>
+    <head>
+        <meta charset="UTF-8">
+        <title>Cinerama</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    </head>
+    <body ng-controller = "moviesCtl" id="movie_body">
+
+        <header>
+            <div class="search"></div>
+            <div class="logo"></div>
+            <span>
+                <b>TEL AVIV</b><br/>
+                <time>12.01.2015</time>
+            </span>
+            <div class="clear"></div>
+        </header>
+
+        <nav>
+            <ul>
+                <li class="selected">Screening Times</li>
+                <li>My Orders</li>
+            </ul>
+            <div class="clear"></div>
+        </nav>
+
+        <main>
+
+            <div ng-repeat = "movie in movies | orderBy: ['-movies._id.time','movies._id.name'] : 'true'">
+                <section class="movie_title_movie">
+                    <span><b>{{movie._id.name}}</span>
+                    <span class="running_time_movie green">2h 15min</span>
+                </section>
+
+                <div class="main-image movie1">
+                    <h3>{{movie._id.time.substring(11,19)}}, <b>{{movie._id.cinema}}, </b>{{movie._id.branch}}</h3>
+                    <h1>00:42:02</h1>
+                    <form action="movie.html">
+                        <input class="button_movie b_green" type="button" value="{{movie._id.seatsLeft}}"/>
+                    </form>
+                </div>
+            </div>
 
 
-		</header>
-		<main>
-			<div ng-repeat = "movie in movies | orderBy: ['-movies._id.time','movies._id.name'] : 'true'">
-		    	<li>{{movie._id.name}}</li>
-		    	<li>{{movie._id.time.substring(0,10)}}</li>
-		    	<li>{{movie._id.time.substring(11,19)}}</li>
-		    	<li>{{movie._id.auditorium}}</li>
-		    	<li>{{movie._id.branch}}</li> 
-		    	<li>{{movie._id.seatsLeft}}</li>
-		    </div>
-		</main>
-		<footer>
-			
-		</footer>
-		<script type="text/javascript" src="js/lib/jquery/jquery-2.1.4.js"></script>
-		<script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
-		<!-- <script type="text/javascript" src="js/lib/angular/angular-ui-router.min.js"></script> -->
-		<script src="js/movie.controller.js"></script>
-		<!-- <script src="js/user.controller.js"></script> -->
-	</body>
+
+
+
+
+            <div class="clear"></div> <!--maybe not necessary-->
+        
+            <section class="cinema_hour">
+                <ul>
+                    <li>
+                        <h3>16:30</h3>
+                        <h4>CINEMA-CITY</h4>
+                        <h6>RAMAT HASHARON</h6>
+                        <h5 class="ch_green">Good Seats</h5>
+                    </li>
+                    <li>
+                        <h3>17:15</h3>
+                        <h4>YES PLANET</h4>
+                        <h6>AYALON</h6>
+                        <h5 class="ch_green">5 Left Seats</h5>
+                    </li>
+                    <li>
+                        <h3>17:45</h3>
+                        <h4>CINEMA-CITY</h4>    
+                        <h6>RAMAT HASHARON</h6>
+                        <h5 class="ch_green">Good Seats</h5>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="movie_title_movie">
+                <span><b>Joy</b></span>
+                <span class="running_time_movie blue">2h 15min</span>
+            </section>
+
+            <div class="main-image movie2">
+                <h3>16:30, <b>RAV CHEN </b>TLV</h3>
+                <h1>00:56:02</h1>
+                <form action="movie.html">
+                    <input class="button_movie b_blue" type="button" value="3 SEAT LEFT" />
+                </form>
+            </div>
+            <div class="clear"></div>
+        
+            <section class="cinema_hour">
+                <ul>
+                    <li>
+                        <h3>16:30</h3>
+                        <h4>CINEMA-CITY</h4>
+                        <h6>RAMAT HASHARON</h6>
+                        <h5 class="ch_blue">Good Seats</h5>
+                    </li>
+                    <li>
+                        <h3>17:15</h3>
+                        <h4>YES PLANET</h4>
+                        <h6>AYALON</h6>
+                        <h5 class="ch_blue">5 Left Seats</h5>
+                    </li>
+                    <li>
+                        <h3>17:45</h3>
+                        <h4>CINEMA-CITY</h4>
+                        <h6>RAMAT HASHARON</h6>
+                        <h5 class="ch_blue">Good Seats</h5>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="movie_title_movie">
+                <span><b>Heightful eight 3D</b></span>
+                <span class="running_time_movie purple">2h 15min</span>
+            </section>
+
+            <div class="main-image movie3">
+                <h3>17:00, <b>CINEMA CITY </b>GLILOT</h3>
+                <h1>01:02:02</h1>
+                <form action="movie.html">
+                    <input class="button_movie b_purple" type="button" value="GOOD SEATS"/>
+                </form>
+            </div>
+            <div class="clear"></div>
+        
+            <section class="cinema_hour">
+                <ul>
+                    <li>
+                        <h3>17:30</h3>
+                        <h4>CINEMA-CITY</h4>
+                        <h6>RAMAT HASHARON</h6>
+                        <h5 class="ch_purple">Good Seats</h5>
+                    </li>
+                    <li>
+                        <h3>17:45</h3>
+                        <h4>YES PLANET</h4>
+                        <h6>AYALON</h6>
+                        <h5 class="ch_purple">5 Left Seats</h5>
+                    </li>
+                    <li>
+                        <h3>19:00</h3>
+                        <h4>RAV CHEN</h4>
+                        <h6>TEL AVIV</h6>
+                        <h5 class="ch_purple">Good Seats</h5>
+                    </li>
+                </ul>
+            </section>
+            
+            <section class="movie_title_movie">
+                <span><b>Heightful eight 3D</b></span>
+                <br>
+                <span class="running_time_movie red">2h 15min</span>
+            </section>
+
+            <div class="main-image movie4">
+                <form action="movie.html">
+                    <input class="button_movie b_white" type="button" value="VIEW MORE SHOWS >"/>
+                </form>
+            </div>
+            
+
+            <section class="movie_title_movie">
+                <span><b>Heightful eight 3D</b></span>
+                <br>
+                <span class="running_time_movie green2">2h 15min</span>
+            </section>
+            <div class="main-image movie5">
+                <form action="movie.html">
+                    <input class="button_movie b_white" type="button" value="VIEW MORE SHOWS >"/>
+                </form>
+            </div>
+            <div class="clear"></div>
+        
+            <section class="cinema_hour ch_2films">
+                <ul>
+                    <li>
+                        <h3>17:15</h3>
+                        <h4>YES PLANET</h4>
+                        <h6>AYALON</h6>
+                        <h5 class="ch_red">5 Left Seats</h5>
+                    </li>
+                    <li>
+                        <h3>17:15</h3>
+                        <h4>CINEMA CITY</h4>
+                        <h6>GLILOT</h6>
+                        <h5 class="ch_green">5 Left Seats</h5>
+                    </li>
+                </ul>
+            </section>
+
+                    <section class="movie_title_movie">
+                <span><b>Heightful eight 3D</b></span>
+                <br>
+                <span class="running_time_movie red">2h 15min</span>
+            </section>
+
+            <div class="main-image movie6">
+                <form action="movie.html">
+                    <input class="button_movie b_white" type="button" value="VIEW MORE SHOWS >"/>
+                </form>
+            </div>
+            
+
+            <section class="movie_title_movie">
+                <span><b>Heightful eight 3D</b></span>
+                <br>
+                <span class="running_time_movie green2">2h 15min</span>
+            </section>
+            <div class="main-image movie7">
+                <form action="movie.html">
+                    <input class="button_movie b_white" type="button" value="VIEW MORE SHOWS >"/>
+                </form>
+            </div>
+            <div class="clear"></div>
+        
+            <section class="cinema_hour ch_2films">
+                <ul>
+                    <li>
+                        <h3>17:15</h3>
+                        <h4>YES PLANET</h4>
+                        <h6>AYALON</h6>
+                        <h5 class="ch_red">5 Left Seats</h5>
+                    </li>
+                    <li>
+                        <h3>17:15</h3>
+                        <h4>CINEMA CITY</h4>
+                        <h6>GLILOT</h6>
+                        <h5 class="ch_green">5 Left Seats</h5>
+                    </li>
+                </ul>
+            </section>
+        </main>
+        <footer class="movie_footer">
+
+        </footer>
+        <script type="text/javascript" src="js/lib/jquery/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
+        <script src="js/movie.controller.js"></script>
+    </body>
 </html>
-
